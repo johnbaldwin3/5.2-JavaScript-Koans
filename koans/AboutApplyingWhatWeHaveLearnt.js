@@ -98,23 +98,22 @@ console.log(sum);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
+    // var ingredientCount = { "{ingredient name}": 0 };
 
       /* chain() together map(), flatten() and reduce() */
-                        _.chain(products)
-                        .map(function(pizza){
-                          console.log(pizza.ingredients);
-                          return pizza.ingredients;
-                        })
-                        .flatten()
-                        .reduce(function(ingreedlist, i ) {
-                          ingredientCount[i] = (ingredientCount[i] || 0) +1;
-                        })
-                        .value();
+    var ingredientCount =  _.chain(products)
+                            .map(function(pizza){
+                              console.log(pizza.ingredients);
+                              return pizza.ingredients;
+                            })
+                            .flatten()
+                            .reduce(function(memo, ingreeds ) {
+                              memo[ingreeds] = (memo[ingreeds] || 0) +1;
+                              return memo;
+                            }, {}) //blank object as starting point, needs a primer
+                            .value();
 
-
-
-                console.log(ingredientCount['mushrooms']);
+    console.log(ingredientCount['mushrooms']);
     expect(ingredientCount['mushrooms']).toBe(2);
   });
 
@@ -122,6 +121,11 @@ console.log(sum);
   // /* UNCOMMENT FOR EXTRA CREDIT */
   // /*
   it("should find the largest prime factor of a composite number", function () {
+
+    //https://www.thepolyglotdeveloper.com/2015/04/determine-if-a-number-is-prime-using-javascript/
+    //tinker with how this code works to figure out ultimate solution.
+    //added reference just while working with it.
+    
       var numberToFactor;
 
       function isPrime(value) {
